@@ -14,6 +14,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 public final class CatnipFabricClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
+		net.createmod.catnip.api.lang.LangBuilder.spaceWidth = () -> net.minecraft.client.Minecraft.getInstance().font.width(" ");
 		CatnipClient.init();
 
 		// event registration

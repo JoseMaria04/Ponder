@@ -172,6 +172,31 @@ public class LangBuilder {
 		tooltip.accept(component());
 	}
 
+	// 26.3 port: restored from Catnip 1.21.1, used by Create's goggle tooltips
+
+	public static final float DEFAULT_SPACE_WIDTH = 4.0F; // space width in vanilla's default font
+
+	/// Width of a space in the current client font; clients may replace it (common code cannot see the font).
+	public static java.util.function.IntSupplier spaceWidth = () -> (int) DEFAULT_SPACE_WIDTH;
+
+	public void forGoggles(List<? super MutableComponent> tooltip) {
+		forGoggles(tooltip, 0);
+	}
+
+	public void forGoggles(List<? super MutableComponent> tooltip, int indents) {
+		tooltip.add(new LangBuilder(namespace)
+			.text(" ".repeat(getIndents(4 + indents)))
+			.add(this)
+			.component());
+	}
+
+	static int getIndents(int defaultIndents) {
+		int spaceWidth = LangBuilder.spaceWidth.getAsInt();
+		if (DEFAULT_SPACE_WIDTH == spaceWidth)
+			return defaultIndents;
+		return net.minecraft.util.Mth.ceil(DEFAULT_SPACE_WIDTH * defaultIndents / spaceWidth);
+	}
+
 	//
 
 	private void assertComponent() {
