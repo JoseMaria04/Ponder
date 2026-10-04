@@ -13,7 +13,7 @@ import net.createmod.ponder.api.client.level.PonderLevel;
 import net.createmod.ponder.api.client.scene.PonderScene;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.createmod.catnip.compat.render.MultiBufferSource;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
@@ -111,7 +111,7 @@ public class MinecartElementImpl extends AnimatedSceneElementBase implements Min
 		poseStack.translate(Mth.lerp(pt, entity.xo, entity.getX()),
 			Mth.lerp(pt, entity.yo, entity.getY()), Mth.lerp(pt, entity.zo, entity.getZ()));
 
-		poseStack.mulPose(Axis.YP.rotationDegrees(rotation.getValue(pt)));
+		poseStack.rotate(Axis.YP.rotationDegrees(rotation.getValue(pt)));
 
 		EntityRenderState state = dispatcher.extractEntity(entity, pt);
 		dispatcher.submit(state, cameraRenderState, 0, 0, 0, poseStack, queue);

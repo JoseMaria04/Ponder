@@ -1,6 +1,6 @@
 package net.createmod.catnip.impl.neoforge.service;
 
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 
 import net.createmod.catnip.api.client.render.RenderPipelineRegistry;
 

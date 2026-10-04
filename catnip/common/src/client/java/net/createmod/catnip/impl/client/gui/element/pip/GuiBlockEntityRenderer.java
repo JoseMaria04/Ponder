@@ -5,12 +5,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.createmod.catnip.api.client.gui.render.pip.GuiBlockEntityRenderState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.render.pip.PictureInPictureRenderer;
-import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 
 public class GuiBlockEntityRenderer extends PictureInPictureRenderer<GuiBlockEntityRenderState> {
-	public GuiBlockEntityRenderer(BufferSource bufferSource) {
-		super(bufferSource);
+	public GuiBlockEntityRenderer() {
 	}
 
 	@Override
@@ -19,12 +18,12 @@ public class GuiBlockEntityRenderer extends PictureInPictureRenderer<GuiBlockEnt
 	}
 
 	@Override
-	protected void renderToTexture(GuiBlockEntityRenderState renderState, PoseStack poseStack) {
+	protected void renderToTexture(GuiBlockEntityRenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector) {
 		CameraRenderState cameraRenderState = new CameraRenderState();
 
 		Minecraft.getInstance().getBlockEntityRenderDispatcher()
 			.getRenderer(renderState.blockEntityRenderState())
-			.submit(renderState.blockEntityRenderState(), poseStack, Minecraft.getInstance().gameRenderer.getFeatureRenderDispatcher().getSubmitNodeStorage(),
+			.submit(renderState.blockEntityRenderState(), poseStack, submitNodeCollector,
 				cameraRenderState
 			);
 	}

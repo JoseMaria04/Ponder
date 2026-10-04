@@ -18,7 +18,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.RedStoneWireBlock;
+import net.minecraft.world.level.block.RedstoneWireBlock;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -87,10 +87,10 @@ public class DebugScenes {
 			.text("Blocks can be modified");
 		scene.idle(20);
 		scene.world().replaceBlocks(util.select().fromTo(1, 1, 3, 2, 2, 4),
-			Blocks.WHITE_CONCRETE.defaultBlockState(), true);
+			Blocks.CONCRETE.white().defaultBlockState(), true);
 		scene.idle(10);
 		scene.addKeyframe();
-		scene.world().replaceBlocks(util.select().position(3, 1, 1), Blocks.REDSTONE_WIRE.defaultBlockState().setValue(RedStoneWireBlock.POWER, 15), true);
+		scene.world().replaceBlocks(util.select().position(3, 1, 1), Blocks.REDSTONE_WIRE.defaultBlockState().setValue(RedstoneWireBlock.POWER, 15), true);
 		scene.rotateCameraY(180);
 
 		for (int i = 0; i < 20; i++) {
@@ -367,7 +367,7 @@ public class DebugScenes {
 
 		scene.world().hideSection(hiddenReplaceArea, Direction.UP);
 		scene.idle(20);
-		scene.world().setBlocks(hiddenReplaceArea, Blocks.BLACK_CONCRETE.defaultBlockState(), false);
+		scene.world().setBlocks(hiddenReplaceArea, Blocks.CONCRETE.black().defaultBlockState(), false);
 		scene.world().showSection(hiddenReplaceArea, Direction.DOWN);
 		scene.idle(20);
 		scene.overlay().showOutlineWithText(hiddenReplaceArea, 30)

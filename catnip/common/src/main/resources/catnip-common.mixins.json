@@ -6,7 +6,8 @@
   "mixins": [
     "BiomeManagerAccessor",
     "EntityAccessor",
-    "MinecraftServerAccessor"
+    "MinecraftServerAccessor",
+    "VirtualEntityIdMixin"
   ],
   "injectors": {
     "defaultRequire": 1

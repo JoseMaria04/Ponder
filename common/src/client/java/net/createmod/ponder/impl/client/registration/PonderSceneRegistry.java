@@ -150,6 +150,10 @@ public class PonderSceneRegistry implements SceneRegistryAccess {
 		StructureTemplate t = new StructureTemplate();
 		DataInputStream stream = new DataInputStream(new BufferedInputStream(new GZIPInputStream(resourceStream)));
 		CompoundTag nbt = NbtIo.read(stream, NbtAccounter.create(0x20000000L));
+		// 26.3 port: schematics saved by older versions must be upgraded (e.g. palette "Name" -> "id"), like vanilla's
+		// structure template loader does
+		int dataVersion = net.minecraft.nbt.NbtUtils.getDataVersion(nbt, 500);
+		nbt = net.minecraft.util.datafix.DataFixTypes.STRUCTURE.updateToCurrentVersion(net.minecraft.util.datafix.DataFixers.getDataFixer(), nbt, dataVersion);
 		t.load(BuiltInRegistries.BLOCK, nbt);
 		return t;
 	}

@@ -1,5 +1,6 @@
 package net.createmod.catnip.api.data.codec.stream;
 
+import net.createmod.catnip.compat.FriendlyByteBufCompat;
 import java.util.function.Function;
 
 import io.netty.buffer.ByteBuf;
@@ -68,12 +69,12 @@ public interface CatnipStreamCodecs {
 	StreamCodec<FriendlyByteBuf, ListTag> COMPOUND_LIST_TAG = new StreamCodec<>() {
 		@Override
 		public ListTag decode(FriendlyByteBuf buffer) {
-			return buffer.readCollection(size -> new ListTag(), COMPOUND_AS_TAG);
+			return FriendlyByteBufCompat.readCollection(buffer, size -> new ListTag(), COMPOUND_AS_TAG);
 		}
 
 		@Override
 		public void encode(FriendlyByteBuf buffer, ListTag value) {
-			buffer.writeCollection(value, COMPOUND_AS_TAG);
+			FriendlyByteBufCompat.writeCollection(buffer, value, COMPOUND_AS_TAG);
 		}
 	};
 

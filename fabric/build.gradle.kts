@@ -29,3 +29,17 @@ dependencies {
     api(project(":catnip-fabric"))
     clientCompileOnly(project(":catnip-fabric", configuration = "client"))
 }
+
+fabricApi {
+    configureTests {
+        createSourceSet = true
+        modId = "ponder_test"
+        enableGameTests = false
+        enableClientGameTests = true
+        eula = true
+    }
+}
+
+dependencies {
+    "gametestImplementation"(project(":catnip-fabric"))
+}

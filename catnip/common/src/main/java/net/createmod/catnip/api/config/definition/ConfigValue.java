@@ -38,8 +38,9 @@ public final class ConfigValue<T> implements ConfigElement {
 
 	/// @return the current value
 	public T get() {
-		this.assertInitialized();
-		return this.value;
+		// 26.3 port: on Fabric, Forge Config API Port loads client/common configs after mod initialization, so
+		// early reads fall back to the default value instead of failing.
+		return this.value != null ? this.value : this.defaultValue;
 	}
 
 	/// Set the held value.
@@ -66,13 +67,13 @@ public final class ConfigValue<T> implements ConfigElement {
 	/// Attempt to set the current value. May fail if the given value is invalid.
 	/// @return an error message if invalid, otherwise empty
 	public Optional<String> trySet(T value) {
-		this.assertInitialized();
+		// the first set is the initial load (value is still null), so it must not require initialization
 		Optional<String> message = this.validate(value);
 		if (message.isPresent())
 			return message;
 
 		if (!value.equals(this.value)) {
-			T oldValue = this.value;
+			T oldValue = this.value != null ? this.value : this.defaultValue;
 			this.value = value;
 			this.changeCallbacks.forEach(callback -> callback.afterChange(oldValue, value));
 		}

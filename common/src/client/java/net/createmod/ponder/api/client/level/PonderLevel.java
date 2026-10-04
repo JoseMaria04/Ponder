@@ -97,7 +97,7 @@ public class PonderLevel extends SchematicLevel implements BlockAndTintGetter {
 				TagValueOutput output = TagValueOutput.createWithContext(reporter, registryAccess());
 				e.save(output);
 				ValueInput input = TagValueInput.create(reporter, registryAccess(), output.buildResult());
-				EntityType.create(input, this, EntitySpawnReason.LOAD).ifPresent(originalEntities::add);
+				EntityType.create(input, this, new net.minecraft.world.entity.EntitySpawnRequest(EntitySpawnReason.LOAD, true)).ifPresent(originalEntities::add);
 			}
 		});
 	}
@@ -120,7 +120,7 @@ public class PonderLevel extends SchematicLevel implements BlockAndTintGetter {
 				TagValueOutput output = TagValueOutput.createWithContext(reporter, registryAccess());
 				e.save(output);
 				ValueInput input = TagValueInput.create(reporter, registryAccess(), output.buildResult());
-				EntityType.create(input, this, EntitySpawnReason.LOAD).ifPresent(originalEntities::add);
+				EntityType.create(input, this, new net.minecraft.world.entity.EntitySpawnRequest(EntitySpawnReason.LOAD, true)).ifPresent(originalEntities::add);
 			}
 		});
 		particles.clearEffects();

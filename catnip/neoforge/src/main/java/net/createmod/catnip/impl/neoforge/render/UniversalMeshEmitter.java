@@ -32,7 +32,7 @@ class UniversalMeshEmitter implements VertexConsumer {
 
 	@Override
 	public void putBakedQuad(Pose pose, BakedQuad quad, QuadInstance instance) {
-		var buffer = bufferSource.getBuffer(quad.materialInfo().layer(), quad.materialInfo().shade());
+		var buffer = bufferSource.getBuffer(quad.materialInfo().layer(), quad.materialInfo().shadeDirectionOverride() != net.minecraft.core.Direction.UP);
 		buffer.putBakedQuad(pose, quad, instance);
 	}
 
@@ -44,7 +44,7 @@ class UniversalMeshEmitter implements VertexConsumer {
 
 	@Override
 	public void putBlockBakedQuad(float x, float y, float z, BakedQuad quad, QuadInstance instance) {
-		var buffer = bufferSource.getBuffer(quad.materialInfo().layer(), quad.materialInfo().shade());
+		var buffer = bufferSource.getBuffer(quad.materialInfo().layer(), quad.materialInfo().shadeDirectionOverride() != net.minecraft.core.Direction.UP);
 		buffer.putBlockBakedQuad(x, y, z, quad, instance);
 	}
 
@@ -82,6 +82,12 @@ class UniversalMeshEmitter implements VertexConsumer {
 	public VertexConsumer setUv2(int i, int i1) {
 		var buffer = bufferSource.getBuffer(defaultLayer, currentShade);
 		return buffer.setUv2(i, i1);
+	}
+
+	@Override
+	public VertexConsumer setUv3(float u, float v) {
+		var buffer = bufferSource.getBuffer(defaultLayer, currentShade);
+		return buffer.setUv3(u, v);
 	}
 
 	@Override

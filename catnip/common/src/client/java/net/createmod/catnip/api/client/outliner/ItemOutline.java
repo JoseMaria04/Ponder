@@ -38,19 +38,7 @@ public class ItemOutline extends Outline {
 			.updateForTopItem(renderState, stack, ItemDisplayContext.FIXED, null, null, 0);
 		renderState.submit(ms, queue, LightCoordsUtil.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 0);
 
-		for (SubmitNodeCollection collection : queue.getSubmitsPerOrder().values()) {
-			for (SubmitNodeStorage.ItemSubmit itemSubmit : collection.getItemSubmits()) {
-				ms.pushPose();
-				ms.last().set(itemSubmit.pose());
-				// TODO: FIXME
-//				ItemRenderer.renderItem(
-//					itemSubmit.displayContext(), ms, buffer,
-//					itemSubmit.lightCoords(), itemSubmit.overlayCoords(),
-//					itemSubmit.tintLayers(), itemSubmit.quads(), itemSubmit.foilType()
-//				);
-				ms.popPose();
-			}
-		}
+		// TODO (upstream FIXME): replaying item submits into the outline buffer is not implemented yet
 
 		ms.popPose();
 	}

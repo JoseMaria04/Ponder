@@ -116,9 +116,9 @@ public class GuiGameElement {
 			UIRenderHelper.flipForGuiRender(poseStack);
 			poseStack.translate(rotationOffset.x, rotationOffset.y);
 			// TODO: how
-//            poseStack.mulPose(Axis.ZP.rotationDegrees((float) zRot));
-//            poseStack.mulPose(Axis.XP.rotationDegrees((float) xRot));
-//            poseStack.mulPose(Axis.YP.rotationDegrees((float) yRot));
+//            poseStack.rotate(Axis.ZP.rotationDegrees((float) zRot));
+//            poseStack.rotate(Axis.XP.rotationDegrees((float) xRot));
+//            poseStack.rotate(Axis.YP.rotationDegrees((float) yRot));
             poseStack.translate(-rotationOffset.x, -rotationOffset.y);
         }
 
@@ -197,7 +197,7 @@ public class GuiGameElement {
 
 			BlockState stateBefore = blockEntity.getBlockState();
 			blockEntity.setBlockState(this.blockState);
-			net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState blockEntityRenderState = Minecraft.getInstance().getBlockEntityRenderDispatcher().tryExtractRenderState(blockEntity, Minecraft.getInstance().getDeltaTracker().getRealtimeDeltaTicks(), null);
+			net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState blockEntityRenderState = Minecraft.getInstance().getBlockEntityRenderDispatcher().tryExtractRenderState(blockEntity, Minecraft.getInstance().getDeltaTracker().getRealtimeDeltaTicks(), null, false);
 			graphics.guiRenderState.addPicturesInPictureState(new GuiBlockEntityRenderState(blockEntityRenderState, new Matrix3x2f(graphics.pose()), 0, 0, 16, 16, 1, null, null));
 			blockEntity.setBlockState(stateBefore);
         }

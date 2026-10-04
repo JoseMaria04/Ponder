@@ -45,7 +45,7 @@ class UniversalMeshEmitter {//implements BlockMultiBufferSource {
 	}
 
 	 private void prepareForGeometry(MutableQuadView quad) {
-	 	currentShade = quad.diffuseShade();
+	 	currentShade = quad.shadeDirectionOverride() != net.minecraft.core.Direction.UP;
 	 }
 
 	 /*@Override

@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 
 import net.createmod.catnip.api.client.gui.TickableGuiEventListener;
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 
 import net.minecraft.client.gui.components.events.ContainerEventHandler;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -14,8 +14,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(Minecraft.class)
-public class MinecraftMixin {
+/// 26.3 ticks the current screen from Gui#tick instead of Minecraft#tick.
+@Mixin(Gui.class)
+public class GuiMixin {
 	@WrapOperation(
 		method = "tick",
 		at = @At(

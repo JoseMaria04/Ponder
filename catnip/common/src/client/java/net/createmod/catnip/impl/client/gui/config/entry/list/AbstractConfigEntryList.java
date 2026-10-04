@@ -1,6 +1,6 @@
 package net.createmod.catnip.impl.client.gui.config.entry.list;
 
-import com.mojang.blaze3d.opengl.GlStateManager;
+import com.mojang.renderpearl.backend.opengl.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.createmod.catnip.api.client.gui.UIRenderHelper;

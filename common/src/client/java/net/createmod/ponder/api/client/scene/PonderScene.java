@@ -577,13 +577,13 @@ public class PonderScene {
 		public PoseStack apply(PoseStack ms, float pt) {
 			ms.translate(width / 2, height / 2, 200 + offset);
 
-			ms.mulPose(com.mojang.math.Axis.XP.rotationDegrees(-35));
-			ms.mulPose(com.mojang.math.Axis.YP.rotationDegrees(55));
+			ms.rotate(com.mojang.math.Axis.XP.rotationDegrees(-35));
+			ms.rotate(com.mojang.math.Axis.YP.rotationDegrees(55));
 			ms.translate(offset, 0, 0);
-			ms.mulPose(com.mojang.math.Axis.YP.rotationDegrees(-55));
-			ms.mulPose(com.mojang.math.Axis.XP.rotationDegrees(35));
-			ms.mulPose(com.mojang.math.Axis.XP.rotationDegrees(xRotation.getValue(pt)));
-			ms.mulPose(com.mojang.math.Axis.YP.rotationDegrees(yRotation.getValue(pt)));
+			ms.rotate(com.mojang.math.Axis.YP.rotationDegrees(-55));
+			ms.rotate(com.mojang.math.Axis.XP.rotationDegrees(35));
+			ms.rotate(com.mojang.math.Axis.XP.rotationDegrees(xRotation.getValue(pt)));
+			ms.rotate(com.mojang.math.Axis.YP.rotationDegrees(yRotation.getValue(pt)));
 
 			UIRenderHelper.flipForGuiRender(ms);
 			float f = 30 * scaleFactor * guiScale;

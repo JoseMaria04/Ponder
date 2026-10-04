@@ -7,7 +7,7 @@ pluginManagement {
 
 rootProject.name = "ponder"
 
-for (platform in listOf("common", "fabric", "neoforge")) {
+for (platform in listOf("common", "fabric")) {
     include(platform)
     project(":$platform").name = "ponder-$platform"
 

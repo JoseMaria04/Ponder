@@ -6,7 +6,7 @@ import java.util.List;
 import org.joml.Matrix3x2f;
 import org.jspecify.annotations.Nullable;
 
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.createmod.catnip.api.client.render.CatnipRenderPipelines;

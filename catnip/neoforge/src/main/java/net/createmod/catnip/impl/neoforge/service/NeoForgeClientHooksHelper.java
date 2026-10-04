@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jspecify.annotations.Nullable;
 
-import com.mojang.blaze3d.pipeline.RenderPipeline.Builder;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline.Builder;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -31,8 +31,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
+import net.createmod.catnip.compat.render.MultiBufferSource;
+import net.createmod.catnip.compat.render.MultiBufferSource.BufferSource;
 import net.minecraft.client.renderer.OrderedSubmitNodeCollector;
 import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
@@ -73,7 +73,7 @@ public class NeoForgeClientHooksHelper implements ModClientHooksHelper {
 	public boolean isKeyPressed(KeyMapping mapping) {
 		int keyCode = mapping.getKey().getValue();
 		Window window = Minecraft.getInstance().getWindow();
-		return InputConstants.isKeyDown(window, keyCode) && mapping.isConflictContextAndModifierActive();
+		return InputConstants.isKeyDown(keyCode) && mapping.isConflictContextAndModifierActive();
 	}
 
 	@Override

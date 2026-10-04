@@ -5,7 +5,7 @@ import java.util.function.Function;
 import org.jspecify.annotations.Nullable;
 
 import net.createmod.catnip.api.platform.services.ModHooksHelper;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerPlayer;
@@ -83,7 +83,7 @@ public class PlacementOffset {
 		if (pos instanceof BlockPos)
 			return (BlockPos) pos;
 
-		return new BlockPos(pos);
+		return new BlockPos((pos).getX(), (pos).getY(), (pos).getZ());
 	}
 
 	public Function<BlockState, BlockState> getTransform() {
@@ -103,7 +103,7 @@ public class PlacementOffset {
 		if (!success)
 			return false;
 
-		return world.getBlockState(new BlockPos(pos)).canBeReplaced();
+		return world.getBlockState(new BlockPos((pos).getX(), (pos).getY(), (pos).getZ())).canBeReplaced();
 	}
 
 	public InteractionResult placeInWorld(Level world, BlockItem blockItem, Player player, InteractionHand hand, BlockHitResult ray) {
@@ -115,7 +115,7 @@ public class PlacementOffset {
 			return InteractionResult.SUCCESS;
 
 		UseOnContext context = new UseOnContext(player, hand, ray);
-		BlockPos newPos = new BlockPos(pos);
+		BlockPos newPos = new BlockPos((pos).getX(), (pos).getY(), (pos).getZ());
 		ItemStack stackBefore = player.getItemInHand(hand)
 			.copy();
 

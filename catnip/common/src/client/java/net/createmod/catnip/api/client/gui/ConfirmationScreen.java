@@ -8,7 +8,7 @@ import net.minecraft.network.chat.CommonComponents;
 
 import org.lwjgl.opengl.GL30;
 
-import com.mojang.blaze3d.opengl.GlStateManager;
+import com.mojang.renderpearl.backend.opengl.GlStateManager;
 
 import net.createmod.catnip.api.client.gui.element.BoxElement;
 import net.createmod.catnip.api.client.gui.element.TextStencilElement;
@@ -101,7 +101,7 @@ public class ConfirmationScreen extends AbstractSimiScreen {
 		this.source = source;
 		Minecraft client = ModClientHooksHelper.INSTANCE.getMinecraftFromScreen(source);
 		this.init(client.getWindow().getGuiScaledWidth(), client.getWindow().getGuiScaledHeight());
-		this.minecraft.screen = this;
+		((net.createmod.catnip.impl.client.mixin.GuiAccessor) this.minecraft.gui).catnip$setScreen(this);
 	}
 
 	@Override
@@ -180,7 +180,7 @@ public class ConfirmationScreen extends AbstractSimiScreen {
 	}
 
 	private void accept(Response success) {
-		minecraft.screen = source;
+		((net.createmod.catnip.impl.client.mixin.GuiAccessor) minecraft.gui).catnip$setScreen(source);
 		action.accept(success);
 	}
 

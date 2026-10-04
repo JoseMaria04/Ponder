@@ -618,7 +618,7 @@ public class PonderUI extends AbstractPonderScreen {
 			slide,
 			finishingFlash,
 			partialTicks,
-			Minecraft.getInstance().gameRenderer.getGameRenderState().windowRenderState
+			Minecraft.getInstance().gameRenderer.gameRenderState().windowRenderState
 		));
 
 		RenderSystem.restoreProjectionMatrix();
@@ -928,8 +928,7 @@ public class PonderUI extends AbstractPonderScreen {
 		if (identifyMode && hoveredBlockPos != null && PonderIndex.editingModeActive()) {
 			Window window = minecraft.getWindow();
 			if (copiedBlockPos != null && event.button() == InputConstants.MOUSE_BUTTON_RIGHT) {
-				clipboardHelper.setClipboard(window,
-					"util.select().fromTo(" + copiedBlockPos.getX() + ", " + copiedBlockPos.getY() + ", "
+				clipboardHelper.setClipboard("util.select().fromTo(" + copiedBlockPos.getX() + ", " + copiedBlockPos.getY() + ", "
 						+ copiedBlockPos.getZ() + ", " + hoveredBlockPos.getX() + ", " + hoveredBlockPos.getY() + ", "
 						+ hoveredBlockPos.getZ() + ")");
 				copiedBlockPos = hoveredBlockPos;
@@ -937,10 +936,10 @@ public class PonderUI extends AbstractPonderScreen {
 			}
 
 			if (minecraft.hasShiftDown())
-				clipboardHelper.setClipboard(window, "util.select().position(" + hoveredBlockPos.getX() + ", "
+				clipboardHelper.setClipboard("util.select().position(" + hoveredBlockPos.getX() + ", "
 					+ hoveredBlockPos.getY() + ", " + hoveredBlockPos.getZ() + ")");
 			else
-				clipboardHelper.setClipboard(window, "util.grid().at(" + hoveredBlockPos.getX() + ", "
+				clipboardHelper.setClipboard("util.grid().at(" + hoveredBlockPos.getX() + ", "
 					+ hoveredBlockPos.getY() + ", " + hoveredBlockPos.getZ() + ")");
 			copiedBlockPos = hoveredBlockPos;
 			return true;
@@ -1060,7 +1059,7 @@ public class PonderUI extends AbstractPonderScreen {
 	public static float getPartialTicks() {
 		float renderPartialTicks = AnimationTickHolder.getGuiPartialTicks();
 
-		if (Minecraft.getInstance().screen instanceof PonderUI ui) {
+		if (Minecraft.getInstance().gui.screen() instanceof PonderUI ui) {
 			if (ui.identifyMode)
 				return ponderPartialTicksPaused;
 

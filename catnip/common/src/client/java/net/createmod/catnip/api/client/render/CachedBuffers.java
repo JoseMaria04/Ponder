@@ -39,8 +39,8 @@ public class CachedBuffers {
 		return () -> {
 			PoseStack stack = new PoseStack();
 			stack.translate(0.5, 0.5, 0.5);
-			stack.mulPose(Axis.YP.rotationDegrees(AngleHelper.horizontalAngle(facing)));
-			stack.mulPose(Axis.XP.rotationDegrees(AngleHelper.verticalAngle(facing)));
+			stack.rotate(Axis.YP.rotationDegrees(AngleHelper.horizontalAngle(facing)));
+			stack.rotate(Axis.XP.rotationDegrees(AngleHelper.verticalAngle(facing)));
 			stack.translate(-0.5, -0.5, -0.5);
 			return stack;
 		};
@@ -50,8 +50,8 @@ public class CachedBuffers {
 		return () -> {
 			PoseStack stack = new PoseStack();
 			stack.translate(0.5, 0.5, 0.5);
-			stack.mulPose(Axis.YP.rotationDegrees(AngleHelper.horizontalAngle(facing)));
-			stack.mulPose(Axis.XP.rotationDegrees(AngleHelper.verticalAngle(facing) + 90));
+			stack.rotate(Axis.YP.rotationDegrees(AngleHelper.horizontalAngle(facing)));
+			stack.rotate(Axis.XP.rotationDegrees(AngleHelper.verticalAngle(facing) + 90));
 			stack.translate(-0.5, -0.5, -0.5);
 			return stack;
 		};

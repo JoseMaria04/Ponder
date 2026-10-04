@@ -18,6 +18,7 @@ group = "net.createmod.$modName"
 version = rootProject.version
 
 repositories {
+    mavenLocal() // local Flywheel 26.3 port
     maven("https://maven.createmod.net") // Flywheel
     maven("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/") // Forge Config API Port
 }

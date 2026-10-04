@@ -7,7 +7,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 
 import net.createmod.catnip.api.client.gui.UIRenderHelper;
-import net.createmod.catnip.api.client.render.DefaultSuperRenderTypeBuffer;
 import net.createmod.catnip.api.client.render.PonderRenderTypes;
 import net.createmod.catnip.api.client.render.SuperRenderTypeBuffer;
 import net.createmod.catnip.api.theme.Color;
@@ -15,35 +14,35 @@ import net.createmod.ponder.api.client.scene.PonderScene;
 import net.createmod.ponder.api.client.scene.PonderScene.SceneTransform;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.render.pip.PictureInPictureRenderer;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
+import net.createmod.catnip.compat.render.MultiBufferSource;
+import net.createmod.catnip.api.client.render.SubmittingSuperRenderTypeBuffer;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.SubmitNodeStorage;
-import net.minecraft.client.renderer.feature.FeatureRenderDispatcher;
 
 public class PonderSceneRenderer extends PictureInPictureRenderer<PonderSceneRenderState> {
-	public PonderSceneRenderer(BufferSource bufferSource) {
-		super(bufferSource);
+	private @org.jspecify.annotations.Nullable MultiBufferSource bufferSource;
+
+	public PonderSceneRenderer() {
 	}
 
 	@Override
-	protected void renderToTexture(PonderSceneRenderState state, PoseStack poseStack) {
-		Minecraft mc = Minecraft.getInstance();
-		GameRenderer gameRenderer = mc.gameRenderer;
-		FeatureRenderDispatcher renderDispatcher = gameRenderer.getFeatureRenderDispatcher();
-
-		SubmitNodeStorage queue = renderDispatcher.getSubmitNodeStorage();
+	protected void renderToTexture(PonderSceneRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector) {
+		// 26.3: picture-in-picture renderers submit into the renderer's own SubmitNodeStorage, which is drawn into
+		// the PiP texture afterwards. Everything (including Ponder's buffered geometry) goes through it.
+		SubmitNodeStorage queue = (SubmitNodeStorage) submitNodeCollector;
+		bufferSource = MultiBufferSource.submitting(queue);
 		poseStack.pushPose();
 		poseStack.setIdentity();
 
 		renderScene(state, poseStack, queue);
-		renderDispatcher.renderAllFeatures();
 
 		poseStack.popPose();
+		bufferSource = null;
 	}
 
 	private void renderScene(PonderSceneRenderState state, PoseStack poseStack, SubmitNodeStorage queue) {
 		float partialTicks = state.partialTicks();
-		SuperRenderTypeBuffer buffer = DefaultSuperRenderTypeBuffer.getInstance();
+		SuperRenderTypeBuffer buffer = new SubmittingSuperRenderTypeBuffer(queue);
 		PonderScene scene = state.scene();
 
 		poseStack.pushPose();
@@ -51,6 +50,10 @@ public class PonderSceneRenderer extends PictureInPictureRenderer<PonderSceneRen
 		SceneTransform transform = scene.getTransform();
 		transform.updateScreenParams(state.width(), state.height(), state.slide(), state.window().guiScale);
 		transform.apply(poseStack, partialTicks);
+		// 26.3: move the scene transform into the model-view matrix; the PiP keeps it until its features are
+		// drawn, so submits that carry no pose of their own (particles) get the same transform.
+		com.mojang.blaze3d.systems.RenderSystem.getModelViewStack().mul(poseStack.last().pose());
+		poseStack.setIdentity();
 		transform.updateSceneRVE(partialTicks);
 		scene.renderScene(buffer, queue, poseStack, partialTicks);
 		buffer.draw();
@@ -83,7 +86,7 @@ public class PonderSceneRenderer extends PictureInPictureRenderer<PonderSceneRen
 				poseStack.translate(0, 0, 2 / 1024f);
 				fillGradient(poseStack, 0, 0, -scene.getBasePlateSize(), 4, new Color(0x66_000000).getRGB(), new Color(0x00_000000).getRGB());
 				poseStack.popPose();
-				poseStack.mulPose(Axis.YP.rotationDegrees(-90));
+				poseStack.rotate(Axis.YP.rotationDegrees(-90));
 			}
 			poseStack.popPose();
 		}
@@ -110,7 +113,7 @@ public class PonderSceneRenderer extends PictureInPictureRenderer<PonderSceneRen
 //			poseStack.pushPose();
 //			poseStack.scale(-1, 1, 1);
 //			poseStack.translate(0, -3, -4);
-//			poseStack.mulPose(Axis.YP.rotationDegrees(-90));
+//			poseStack.rotate(Axis.YP.rotationDegrees(-90));
 //			poseStack.translate(-8, -2, 2 / 64f);
 //			for (int z = 0; z <= bounds.getZSpan(); z++) {
 //				poseStack.translate(16, 0, 0);
@@ -121,12 +124,12 @@ public class PonderSceneRenderer extends PictureInPictureRenderer<PonderSceneRen
 //			// DIRECTIONS
 //			poseStack.pushPose();
 //			poseStack.translate(bounds.getXSpan() * -8, 0, bounds.getZSpan() * 8);
-//			poseStack.mulPose(Axis.YP.rotationDegrees(-90));
+//			poseStack.rotate(Axis.YP.rotationDegrees(-90));
 //			for (Direction d : Iterate.horizontalDirections) {
-//				poseStack.mulPose(Axis.YP.rotationDegrees(90));
+//				poseStack.rotate(Axis.YP.rotationDegrees(90));
 //				poseStack.pushPose();
 //				poseStack.translate(0, 0, bounds.getZSpan() * 16);
-//				poseStack.mulPose(Axis.XP.rotationDegrees(-90));
+//				poseStack.rotate(Axis.XP.rotationDegrees(-90));
 //				graphics.text(font, d.name().substring(0, 1), 0, 0, 0x66FFFFFF, false);
 //				graphics.text(font, "|", 2, 10, 0x44FFFFFF, false);
 //				graphics.text(font, ".", 2, 14, 0x22FFFFFF, false);

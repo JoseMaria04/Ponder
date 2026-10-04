@@ -35,17 +35,17 @@ public final class CatnipClientPayloadHandlers {
 
 	private static void openConfigScreen(OpenConfigScreenPacket packet, LocalPlayer player) {
 		Minecraft mc = Minecraft.getInstance();
-		Screen currentScreen = mc.screen;
+		Screen currentScreen = mc.gui.screen();
 
 		switch (packet.target()) {
 			case Mod(String id) -> RootConfigScreen.forMod(id, currentScreen).ifPresentOrElse(
-				mc::setScreen, () -> logger.warn("Failed to open RootConfigScreen for mod {}", id)
+				mc.gui::setScreen, () -> logger.warn("Failed to open RootConfigScreen for mod {}", id)
 			);
 			case Config(ConfigId id) -> ConfigScreen.find(id).ifPresentOrElse(
-				mc::setScreen, () -> logger.warn("Failed to open ConfigScreen for config {}", id)
+				mc.gui::setScreen, () -> logger.warn("Failed to open ConfigScreen for config {}", id)
 			);
 			case Value(ConfigValueId id) -> ConfigScreen.find(id).ifPresentOrElse(
-				mc::setScreen, () -> logger.warn("Failed to open ConfigScreen for value {}", id)
+				mc.gui::setScreen, () -> logger.warn("Failed to open ConfigScreen for value {}", id)
 			);
 		}
 	}

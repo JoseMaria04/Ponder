@@ -42,7 +42,7 @@ public final class NBTProcessors {
 			if (tag.isEmpty())
 				return null;
 
-			SignText text = CatnipCodecUtils.decode(SignText.DIRECT_CODEC, tag.get()).orElse(null);
+			SignText text = CatnipCodecUtils.decode(SignText.CODEC, tag.get()).orElse(null);
 
 			if (text != null) {
 				for (Component component : text.getMessages(false)) {

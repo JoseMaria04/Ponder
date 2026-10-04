@@ -7,7 +7,7 @@ import com.mojang.math.Axis;
 import net.createmod.catnip.api.client.platform.ClientFluidHelper;
 import net.createmod.catnip.api.data.Iterate;
 import net.createmod.catnip.api.platform.services.ModFluidHelper;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.createmod.catnip.compat.render.MultiBufferSource;
 import net.minecraft.client.renderer.OrderedSubmitNodeCollector;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -34,7 +34,7 @@ public final class FluidRenderHelper {
 		ms.pushPose();
 		if (invertGasses && ModFluidHelper.INSTANCE.isLighterThanAir(fluid)) {
 			ms.translate(center.x, center.y, center.z);
-			ms.mulPose(Axis.XP.rotationDegrees(180));
+			ms.rotate(Axis.XP.rotationDegrees(180));
 			ms.translate(-center.x, -center.y, -center.z);
 		}
 
@@ -66,7 +66,7 @@ public final class FluidRenderHelper {
 		ms.pushPose();
 		if (invertGasses && ModFluidHelper.INSTANCE.isLighterThanAir(fluid)) {
 			ms.translate(center.x, center.y, center.z);
-			ms.mulPose(Axis.XP.rotationDegrees(180));
+			ms.rotate(Axis.XP.rotationDegrees(180));
 			ms.translate(-center.x, -center.y, -center.z);
 		}
 

@@ -35,4 +35,7 @@ dependencies {
         }
     }
     runtimeOnly(libs.flywheel.fabric)
+
+    // 26.3 port: Fabric config backend (NeoForge ModConfigSpec on Fabric), same TOML files as Create Fabric 1.20.1
+    api("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:26.3.1")
 }
