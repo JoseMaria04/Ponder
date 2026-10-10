@@ -34,6 +34,8 @@ dependencies {
             requireFeature("api")
         }
     }
+    // 26.3 port: SuperByteBuffer extends Flywheel's TransformStack again (as in Catnip 1.21.1)
+    compileOnly(libs.flywheel.fabric)
     runtimeOnly(libs.flywheel.fabric)
 
     // 26.3 port: Fabric config backend (NeoForge ModConfigSpec on Fabric), same TOML files as Create Fabric 1.20.1

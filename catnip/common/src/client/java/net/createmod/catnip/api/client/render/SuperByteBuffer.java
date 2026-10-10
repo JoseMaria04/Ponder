@@ -1,5 +1,7 @@
 package net.createmod.catnip.api.client.render;
 
+import dev.engine_room.flywheel.lib.transform.TransformStack;
+
 import net.minecraft.client.renderer.block.BlockAndTintGetter;
 
 import org.joml.Matrix4f;
@@ -10,7 +12,8 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.createmod.catnip.api.theme.Color;
 import net.minecraft.util.LightCoordsUtil;
 
-public interface SuperByteBuffer {
+// 26.3 port: transform helpers restored (Catnip 1.21.1 API) so Create can keep chaining rotateCentered/translate/...
+public interface SuperByteBuffer extends TransformStack<SuperByteBuffer> {
 	static int maxLight(int packedLight1, int packedLight2) {
 		int blockLight1 = LightCoordsUtil.block(packedLight1);
 		int skyLight1 = LightCoordsUtil.sky(packedLight1);

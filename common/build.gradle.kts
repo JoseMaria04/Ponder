@@ -4,6 +4,8 @@ plugins {
 }
 
 dependencies {
+    // 26.3 port: Catnip's SuperByteBuffer extends Flywheel's TransformStack
+    compileOnly(libs.flywheel.fabric)
     minecraft(libs.minecraft)
     compileOnly(libs.bundles.mixin)
     compileOnlyApi(project(":catnip-common"))

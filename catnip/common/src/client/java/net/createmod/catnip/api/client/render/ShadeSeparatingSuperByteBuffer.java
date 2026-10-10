@@ -173,6 +173,50 @@ public class ShadeSeparatingSuperByteBuffer implements SuperByteBuffer {
 		return transforms;
 	}
 
+	@Override
+	public SuperByteBuffer scale(float factorX, float factorY, float factorZ) {
+		transforms.scale(factorX, factorY, factorZ);
+		return this;
+	}
+
+	@Override
+	public SuperByteBuffer rotate(org.joml.Quaternionfc quaternion) {
+		var last = transforms.last();
+		last.pose().rotate(quaternion);
+		last.normal().rotate(quaternion);
+		return this;
+	}
+
+	@Override
+	public SuperByteBuffer translate(float x, float y, float z) {
+		transforms.translate(x, y, z);
+		return this;
+	}
+
+	@Override
+	public SuperByteBuffer mulPose(org.joml.Matrix4fc pose) {
+		transforms.last().pose().mul(pose);
+		return this;
+	}
+
+	@Override
+	public SuperByteBuffer mulNormal(org.joml.Matrix3fc normal) {
+		transforms.last().normal().mul(normal);
+		return this;
+	}
+
+	@Override
+	public SuperByteBuffer pushPose() {
+		transforms.pushPose();
+		return this;
+	}
+
+	@Override
+	public SuperByteBuffer popPose() {
+		transforms.popPose();
+		return this;
+	}
+
 	public SuperByteBuffer color(float r, float g, float b, float a) {
 		this.r = r;
 		this.g = g;

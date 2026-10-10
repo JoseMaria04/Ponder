@@ -28,6 +28,8 @@ dependencies {
     api(libs.bundles.fabric)
     api(project(":catnip-fabric"))
     clientCompileOnly(project(":catnip-fabric", configuration = "client"))
+    // 26.3 port: Catnip's SuperByteBuffer extends Flywheel's TransformStack
+    compileOnly("dev.engine-room.flywheel:flywheel-fabric:1.0.6-mc26.3")
 }
 
 fabricApi {
